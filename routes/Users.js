@@ -1,0 +1,45 @@
+const router = require('express').Router();
+const Users = require('../models/Users');
+
+// Find All
+router.get('/', (req, res) => {
+  Users.findAll()
+    .then((Users) => {
+      if (!Users.length) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${Users}`);
+    })
+    .catch(err => res.status(500).send(err));
+});
+
+// Find One by todoid
+router.get('/Login_id/:Login_id', (req, res) => {
+  Users.findOneByUserid(req.params.Login_id)
+    .then((user) => {
+      if (!user) return res.status(404).send({ err: 'User not found' });
+      res.send(`findOne successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send(err));
+});
+
+// Create new todo document
+router.post('/', (req, res) => {
+  Users.create(req.body)
+    .then(user => res.send(user))
+    .catch(err => res.status(500).send(err));
+});
+
+// Update by todoid
+router.put('/Login_id/:Login_id', (req, res) => {
+  Users.updateByTodoid(req.params.Login_id, req.body)
+    .then(user => res.send(user))
+    .catch(err => res.status(500).send(err));
+});
+
+// Delete by todoid
+router.delete('/Login_id/:Login_id', (req, res) => {
+  Users.deleteByTodoid(req.params.Login_id)
+    .then(() => res.sendStatus(200))
+    .catch(err => res.status(500).send(err));
+});
+
+module.exports = router;
