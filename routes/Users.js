@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Users = require('../models/Users');
+const Users = require('../models/User');
 
 // Find All
 router.get('/', (req, res) => {
@@ -12,11 +12,12 @@ router.get('/', (req, res) => {
 });
 
 // Find One by todoid
-router.get('/Login_id/:Login_id', (req, res) => {
-  Users.findOneByUserid(req.params.Login_id)
+router.get('/Name/:Name/Phone/:Phone', (req, res) => {
+  console.log('sssssssssssssssssssssss')
+  Users.findOneByName_Number(req.params.Name, req.params.Phone)
     .then((user) => {
       if (!user) return res.status(404).send({ err: 'User not found' });
-      res.send(`findOne successfully: ${user}`);
+      res.send(user);
     })
     .catch(err => res.status(500).send(err));
 });

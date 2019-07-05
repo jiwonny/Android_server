@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 4500;
 
 // Static File Service
-app.use(express.static('public'));
+app.use(express.static('images'));
 // Body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -25,5 +25,6 @@ mongoose.connect(process.env.MONGO_URI)
 
 // ROUTERS
 app.use('/Users', require('./routes/Users'));
+//app.use('/Images', require('./routes/Images'))
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
