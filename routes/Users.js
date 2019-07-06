@@ -12,6 +12,15 @@ router.get('/', (req, res) => {
 });
 
 // Find One by todoid
+router.get('/search/:Login_id', (req, res) => {
+  Users.findUsers(req.params.Login_id)
+    .then((user) => {
+      if (!user) return res.status(404).send({ err: 'User not found' });
+      res.send(user);
+    })
+    .catch(err => res.status(500).send(err));
+});
+
 router.get('/Name/:Name/Phone/:Phone', (req, res) => {
   Users.findOneByName_Number(req.params.Name, req.params.Phone)
     .then((user) => {
@@ -21,7 +30,7 @@ router.get('/Name/:Name/Phone/:Phone', (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
-<<<<<<< HEAD
+
 router.get('/Name/:Name/Login_id/:Login_id', (req, res) => {
   console.log('sssssssssssssssssssssss')
   Users.findOneByName_LoginId(req.params.Name, req.params.Login_id)
@@ -33,9 +42,6 @@ router.get('/Name/:Name/Login_id/:Login_id', (req, res) => {
 });
 
 // Create new todo document
-=======
-// Create new user document
->>>>>>> f97af655ee50b4d743757f180a41b9072a9b19ce
 router.post('/', (req, res) => {
   Users.create(req.body)
     .then(user => res.send(user))

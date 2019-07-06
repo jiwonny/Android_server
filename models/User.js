@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   Name: { type: String, required: true },
   Number: { type: String, default: false },
   Profile_image_id: {type: String},
-  Friends: []
+  Friends: {}
 },
 {
   timestamps: true
@@ -26,6 +26,13 @@ UserSchema.statics.create = function (payload) {
     // return promise
     return this.find({});
   };
+
+  UserSchema.statics.findUsers = function(login_id){
+    var search = "/"+login_id+"/";
+    console.log(login_id);
+    console.log("{Login_id: "+ search+"}");
+    return this.find({Login_id: { $regex:'.*'+ login_id + '.*' } }).limit(5);
+  }
 
   // Find One by usersid
   UserSchema.statics.findOneByName_Number = function (name, number) {
