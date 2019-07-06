@@ -21,7 +21,6 @@ router.get('/Name/:Name/Phone/:Phone', (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
-<<<<<<< HEAD
 router.get('/Name/:Name/Login_id/:Login_id', (req, res) => {
   console.log('sssssssssssssssssssssss')
   Users.findOneByName_LoginId(req.params.Name, req.params.Login_id)
@@ -32,10 +31,7 @@ router.get('/Name/:Name/Login_id/:Login_id', (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
-// Create new todo document
-=======
 // Create new user document
->>>>>>> f97af655ee50b4d743757f180a41b9072a9b19ce
 router.post('/', (req, res) => {
   Users.create(req.body)
     .then(user => res.send(user))

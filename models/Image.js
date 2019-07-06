@@ -35,6 +35,10 @@ ImageSchema.statics.insertinto = function (login_id, filename) {
   return Image.save();
 };
 
+// Delete by id & url
+ImageSchema.statics.deleteByidandurl = function (login_id, url) {
+  return this.remove({ Login_id : login_id , Url : url });
+};
 
 
 
