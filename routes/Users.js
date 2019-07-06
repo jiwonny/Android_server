@@ -13,7 +13,6 @@ router.get('/', (req, res) => {
 
 // Find One by todoid
 router.get('/Name/:Name/Phone/:Phone', (req, res) => {
-  console.log('sssssssssssssssssssssss')
   Users.findOneByName_Number(req.params.Name, req.params.Phone)
     .then((user) => {
       if (!user) return res.status(404).send({ err: 'User not found' });
@@ -22,7 +21,7 @@ router.get('/Name/:Name/Phone/:Phone', (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
-// Create new todo document
+// Create new user document
 router.post('/', (req, res) => {
   Users.create(req.body)
     .then(user => res.send(user))
