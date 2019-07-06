@@ -23,12 +23,19 @@ router.get('/getImageList/:Login_id', (req, res) =>{
     .catch(err => res.status(500).send(err));
 });
 
+// Delete Images by LoginID & Url
+router.delete('/delete/:Login_id/:url', (req,res) =>{
+  Images.deleteByidandurl(req.params.Login_id, req.params.url)
+    .then(() => res.sendStatus(200))
+    .catch(err => res.status(500).send(err));
+});
+
 // create Image
 router.post('/Login_id/:Login_id',(req, res) => {
   Images.create(req.body)
     .then(image => res.send(image))
     .catch(err => res.status(500).send(err));
-  });
+});
 
 router.post('/:Login_id', (req, res, next) => {
   var files_array = new Array();
@@ -42,7 +49,7 @@ router.post('/:Login_id', (req, res, next) => {
 
   form.on('file', function(field, file){
     console.log('[file]'+ field, file);
-    filename = form.uploadDir+ '/' + file.name;
+    filename = form.uploadDir+ '/' +req.params.Login_id+'_'+file.name;
     fs.rename(file.path,filename ,function(err){
       if (err) throw err;
       console.log('renamed complete');
@@ -50,7 +57,7 @@ router.post('/:Login_id', (req, res, next) => {
 
     files.push([field,file]);
     files_array.push(file.name);
-    Images.insertinto(req.params.Login_id, file.name)
+    Images.insertinto(req.params.Login_id, req.params.Login_id+'_'+file.name)
       .then(() => res.send("success"))
       .catch(err => res.status(500).send(err));
 
