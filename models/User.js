@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
   Login_id: { type: String, required: true, unique: true },
   Name: { type: String, required: true },
-  Number: { type: String, default: false }
+  Number: { type: String, default: false },
+  Profile_image_id: {type: String},
+  Friends: []
 },
 {
   timestamps: true
@@ -30,8 +32,16 @@ UserSchema.statics.create = function (payload) {
     return this.findOne({ Name : name, Number : number });
   };
 
+
+    // Find One by usersid
+    UserSchema.statics.findOneByName_LoginId = function (name, login_id) {
+      return this.findOne({ Name : name, Login_id : login_id });
+    };
+
+    
+
   // Update by todoid
-  UserSchema.statics.updateByUserid = function (Login_id, payload) {
+  UserSchema.statics.updateByLoginId = function (Login_id, payload) {
     // { new: true }: return the modified document rather than the original. defaults to false
     return this.findOneAndUpdate({ Login_id }, payload, { new: true });
   };
