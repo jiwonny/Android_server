@@ -40,17 +40,20 @@ UserSchema.statics.create = function (payload) {
   };
 
 
-    // Find One by usersid
-    UserSchema.statics.findOneByName_LoginId = function (name, login_id) {
-      return this.findOne({ Name : name, Login_id : login_id });
-    };
+  UserSchema.statics.findOneByName_LoginId = function (name, login_id) {
+    return this.findOne({ Name : name, Login_id : login_id });
+  };
 
-    
 
-  // Update by todoid
+  // Update User by login_id
   UserSchema.statics.updateByLoginId = function (Login_id, payload) {
     // { new: true }: return the modified document rather than the original. defaults to false
-    return this.findOneAndUpdate({ Login_id }, payload, { new: true });
+    return this.findOneAndUpdate({Login_id }, payload, { new: true });
+  };
+
+  // Update User Profile by Login_id
+  UserSchema.statics.updateProfilebyLoginId = function (login_id, profile) {
+    return this.findOneAndUpdate({ Login_id : login_id}, { $set: {Profile_image_id : profile} } );
   };
 
   // Delete by todoid

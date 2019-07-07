@@ -25,9 +25,16 @@ router.get('/getImageList/:Login_id', (req, res) =>{
 
 // Delete Images by LoginID & Url
 router.delete('/delete/:Login_id/:url', (req,res) =>{
+
+  fs.unlink(`images/`+req.params.url,(err)=>
+  { console.log(delete successfull);
+  });
+
   Images.deleteByidandurl(req.params.Login_id, req.params.url)
     .then(() => res.sendStatus(200))
     .catch(err => res.status(500).send(err));
+
+
 });
 
 // create Image
