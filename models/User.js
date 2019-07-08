@@ -28,13 +28,18 @@ UserSchema.statics.create = function (payload) {
   };
 
   UserSchema.statics.findUsers = function(login_id){
-    var search = "/"+login_id+"/";
     console.log(login_id);
-    console.log("{Login_id: "+ search+"}");
-    return this.find({Login_id: { $regex:'.*'+ login_id + '.*' } }).limit(5);
+    const query = new RegExp(login_id);
+    return this.find({Login_id: query }).limit(5);
   }
 
-  // Find One by usersid
+  // find Users by loginid
+  UserSchema.statics.findOneByLoginId = function(login_id){
+    return this.findOne({Login_id : login_id});
+  }
+
+
+  // Find One by name and number
   UserSchema.statics.findOneByName_Number = function (name, number) {
     return this.findOne({ Name : name, Number : number });
   };
