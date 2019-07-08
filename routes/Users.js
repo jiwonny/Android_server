@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
+<<<<<<< HEAD
 router.get('/Login_id/:Login_id', (req, res) => {
   Users.findOneByLoginId(req.params.Login_id)
     .then((user) => {
@@ -20,7 +21,11 @@ router.get('/Login_id/:Login_id', (req, res) => {
     .catch(err => res.status(500).send(err));
 })
 // Find One by loginid
+=======
+// Find Users by loginid
+>>>>>>> f37d702f0edce974fe446cabde90080b0d242852
 router.get('/search/:Login_id', (req, res) => {
+  console.log("7987897897897987897987987");
   Users.findUsers(req.params.Login_id)
     .then((user) => {
       if (!user) return res.status(404).send({ err: 'User not found' });
@@ -48,7 +53,20 @@ router.get('/Name/:Name/Login_id/:Login_id', (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
+<<<<<<< HEAD
 // Create new user document
+=======
+router.get('/Login_id/:Login_id', (req, res) => {
+  Users.findOneByLoginId(req.params.Login_id)
+    .then((user) => {
+      if (!user) return res.status(404).send({ err: 'User not found' });
+      res.send(user);
+    })
+    .catch(err => res.status(500).send(err));
+})
+
+
+>>>>>>> f37d702f0edce974fe446cabde90080b0d242852
 router.post('/', (req, res) => {
   Users.create(req.body)
     .then(user => res.send(user))
@@ -64,7 +82,6 @@ router.put('/Login_id/:Login_id', (req, res) => {
 
 // Update User profile by Loigin_id
 router.put('/Profile/:Login_id/:Profile', (req, res) => {
-  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   Users.updateProfilebyLoginId(req.params.Login_id, req.params.Profile, req.body)
     .then(user => res.send(user))
     .catch(err => res.status(500).send(err));

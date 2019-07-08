@@ -2,8 +2,10 @@ const mongoose = require('mongoose');
 // Define Schemes
 const ImageSchema = new mongoose.Schema({
   Login_id: { type: String, required: true },
-  Url: { type: String, required: true},
-  Timestamp: { type: Date, default: Date.now}
+  Name:{ type: String, required: true},
+  Url: { type: String, unique: true, required: true},
+  Timestamp: { type: Date, default: Date.now},
+  Comments: {}
 },
 {
   timestamps: true
@@ -29,9 +31,9 @@ ImageSchema.statics.create = function (payload) {
     return Image.save();
   };
 
-ImageSchema.statics.insertinto = function (login_id, filename) {
+ImageSchema.statics.insertinto = function (login_id,name, filename) {
   console.log(login_id +'------------------'+filename);
-  const Image = new this({ Login_id : login_id , Url : filename });
+  const Image = new this({ Login_id : login_id , Name: name, Url : filename });
   return Image.save();
 };
 

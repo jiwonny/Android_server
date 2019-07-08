@@ -26,7 +26,7 @@ router.get('/getImageList/:Login_id', (req, res) =>{
 // Delete Images by LoginID & Url
 router.delete('/delete/:Login_id/:url', (req,res) =>{
 
-  fs.unlink(`images/`+req.params.url,(err)=>
+  fs.unlink('images/'+req.params.url,(err)=>
   { console.log(delete successfull);
   });
 
@@ -44,7 +44,7 @@ router.post('/Login_id/:Login_id',(req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
-router.post('/:Login_id', (req, res, next) => {
+router.post('/:Login_id/:Name', (req, res, next) => {
   var files_array = new Array();
   var files = new Array();
   var form = new formidable.IncomingForm();
@@ -64,9 +64,9 @@ router.post('/:Login_id', (req, res, next) => {
 
     files.push([field,file]);
     files_array.push(file.name);
-    Images.insertinto(req.params.Login_id, req.params.Login_id+'_'+file.name)
+    Images.insertinto(req.params.Login_id, req.params.Name, req.params.Login_id+'_'+file.name)
       .then(() => res.send("success"))
-      .catch(err => res.status(500).send(err));
+      .catch(err => res.send("duplicate"));
 
   }).on('end',function(){
     console.log('---------------------------<files>------------');
