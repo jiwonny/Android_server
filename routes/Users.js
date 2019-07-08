@@ -11,6 +11,14 @@ router.get('/', (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
+router.get('/Login_id/:Login_id', (req, res) => {
+  Users.findOneByLoginId(req.params.Login_id)
+    .then((user) => {
+      if (!user) return res.status(404).send({ err: 'User not found' });
+      res.send(user);
+    })
+    .catch(err => res.status(500).send(err));
+})
 // Find One by loginid
 router.get('/search/:Login_id', (req, res) => {
   Users.findUsers(req.params.Login_id)
@@ -68,5 +76,11 @@ router.delete('/Login_id/:Login_id', (req, res) => {
     .then(() => res.sendStatus(200))
     .catch(err => res.status(500).send(err));
 });
+
+router.post('/register', (req, res) => {
+  Users.newUserRegister(req.body)
+    .then(user => res.send(user))
+    .catch(err => res.status(500).send(err));
+})
 
 module.exports = router;

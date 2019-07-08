@@ -1,4 +1,31 @@
 const mongoose = require('mongoose');
+// const crypto = require('crypto');
+
+// var genRandomString = function(length){
+//   return crypto.randomBytes(Math.ceil(length/2)).toString('hex').slice(0, length);
+// }
+
+// var sha512 = function(password, salt){
+//   var hash = crypto.createHmac('sha512', salt);
+//   hash.update(password);
+//   var value =hash.digest('hex');
+//   return {
+//     salt: salt,
+//     passwordHash:value
+//   };
+// }
+
+// function saltHashPassword(userPassword){
+//   var salt = genRandomString(16);
+//   var passwordData = sha512(userPassword, salt);
+//   return passwordData;
+// }
+
+// function checkHashPassword(userPassword, salt){
+//   var passwordData = sha512(userPassword, salt);
+//   return passwordData;
+// }
+
 
 // Define Schemes
 const UserSchema = new mongoose.Schema({
@@ -12,6 +39,22 @@ const UserSchema = new mongoose.Schema({
   timestamps: true
 });
 
+
+UserSchema.statics.newUserRegister = function(payload){
+  const User = new this(payload);
+  return User.save();
+  // var plaint_password = User.Password;
+  // var hash_data = saltHashPassword(plaint_password);
+
+  // var password = hash_data.passwordHash;
+  // var salt = hash_data.salt;
+  
+  // User.Salt = salt;
+  // User.Password = password;
+
+  // return User.save();
+
+}
 
 // Create new user document
 UserSchema.statics.create = function (payload) {
@@ -39,6 +82,9 @@ UserSchema.statics.create = function (payload) {
     return this.findOne({ Name : name, Number : number });
   };
 
+  UserSchema.statics.findOneByLoginId = function(login_id){
+    return this.findOne({Login_id : login_id});
+  }
 
   UserSchema.statics.findOneByName_LoginId = function (name, login_id) {
     return this.findOne({ Name : name, Login_id : login_id });
