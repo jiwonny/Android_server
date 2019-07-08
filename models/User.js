@@ -73,7 +73,7 @@ UserSchema.statics.create = function (payload) {
   UserSchema.statics.findUsers = function(login_id){
     console.log(login_id);
     const query = new RegExp(login_id);
-    return this.find({Login_id: query }).limit(5);
+    return this.find({Login_id: query}).limit(5);
   }
 
   // find Users by loginid
