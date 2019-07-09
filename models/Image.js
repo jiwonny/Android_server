@@ -4,8 +4,8 @@ const ImageSchema = new mongoose.Schema({
   Login_id: { type: String, required: true },
   Name:{ type: String, required: true},
   Url: { type: String, unique: true, required: true},
-  Timestamp: { type: Date, default: Date.now},
-  Comments: {}
+  Comments: {},
+  Timestamp: { type: Date, default: Date.now}
 },
 {
   timestamps: true
@@ -21,6 +21,14 @@ ImageSchema.statics.findAll = function () {
 ImageSchema.statics.findImagesByID = function (login_id) {
   // return promise
   return this.find({ Login_id : login_id });
+};
+
+ImageSchema.statics.findImage = function ( login_id, url ){
+  return this.findOne({Login_id: login_id, Url : url});
+};
+
+ImageSchema.statics.updateComment = function( login_id, url, payload ){
+  return this.findOneAndUpdate({ Login_id : login_id, Url : url}, { $set: {Comments : payload} } );
 };
 
 // Create new user document

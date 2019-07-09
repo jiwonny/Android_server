@@ -17,24 +17,44 @@ router.get('/', (req, res) => {
 router.get('/getImageList/:Login_id', (req, res) =>{
   Images.findImagesByID(req.params.Login_id)
     .then((images) => {
-      if (!images.length) return res.status(404).send({ err: 'User not found' });
+      if (!images.length) return res.status(404).send({ err: 'Image not found' });
       res.send(images);
     })
     .catch(err => res.status(500).send(err));
 });
 
+// Find Image by LoginID and url
+router.get('/getImage/:Login_id/:Url', (req,res) =>{
+  console.log("bbbbbbbbbbbbbbbbbbbbbbb"+req.params.Url);
+  Images.findImage(req.params.Login_id, req.params.Url)
+  .then((image) => {
+    if (!image) return res.status(404).send({ err: 'Image not found' });
+    res.send(image);
+  })
+  .catch(err => res.status(500).send(err));
+});
+
+//Update Comments
+router.put('/updateComment/:Login_id/:Url', (req,res) =>{
+  console.log("aaaaaaaaaaaaaaaaaa"+req.params.Url);
+  Images.updateComment(req.params.Login_id, req.params.Url,req.body)
+  .then((image) => {
+    if (!image) return res.status(404).send({ err: 'Image not found' });
+    res.send(image);
+  })
+  .catch(err => res.status(500).send(err));
+})
+
 // Delete Images by LoginID & Url
 router.delete('/delete/:Login_id/:url', (req,res) =>{
 
   fs.unlink('images/'+req.params.url,(err)=>
-  { console.log(delete successfull);
+  { console.log("delete successfull");
   });
 
   Images.deleteByidandurl(req.params.Login_id, req.params.url)
     .then(() => res.sendStatus(200))
     .catch(err => res.status(500).send(err));
-
-
 });
 
 // create Image
